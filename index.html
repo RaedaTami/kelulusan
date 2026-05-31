@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengumuman Kelulusan Kelas IX – MTsN 3 Tanah Datar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --hijau-tua:    #0D3B1E;
+      --emas:         #C9A84C;
+      --emas-muda:    #E8C97A;
+      --putih:        #FDFCF8;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Source Sans 3', 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--hijau-tua); color: var(--putih); min-height: 100vh; }
+
+    /* ── BACKGROUND FOTO SEKOLAH ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(10,40,20,0.90) 0%,
+          rgba(10,40,20,0.74) 35%,
+          rgba(10,40,20,0.82) 70%,
+          rgba(10,40,20,0.95) 100%),
+        url('foto-sekolah.jpg') center/cover no-repeat fixed;
+    }
+
+    .wrapper {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      width: 100%;
+      background: rgba(8,32,16,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,0.30);
+      padding: 14px 24px;
+    }
+    .header-inner {
+      max-width: 700px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+    .logo-img {
+      width: 58px; height: 58px;
+      object-fit: contain; flex-shrink: 0;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.45));
+    }
+    .header-divider {
+      width: 1px; height: 50px;
+      background: rgba(201,168,76,0.28); flex-shrink: 0;
+    }
+    .header-text { text-align: center; }
+    .header-instansi {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--emas-muda); opacity: 0.80;
+    }
+    .header-nama {
+      font-family: var(--font-display);
+      font-size: 19px; font-weight: 700;
+      color: var(--putih); line-height: 1.2; margin: 3px 0 2px;
+    }
+    .header-alamat { font-size: 11px; color: rgba(253,252,248,0.58); }
+
+    /* ── KONTEN UTAMA ── */
+    .main-content {
+      flex: 1; width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 38px 16px 60px;
+    }
+
+    /* ── ORNAMEN ── */
+    .ornamen { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .ornamen-line { width: 55px; height: 1px; background: linear-gradient(90deg, transparent, var(--emas)); }
+    .ornamen-line.r { background: linear-gradient(90deg, var(--emas), transparent); }
+    .ornamen-diamond { width: 6px; height: 6px; background: var(--emas); transform: rotate(45deg); }
+    .ornamen-text { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--emas); }
+
+    /* ── JUDUL ── */
+    .judul-section { text-align: center; margin-bottom: 30px; }
+    .judul-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--emas-muda); opacity: 0.80; margin-bottom: 10px;
+    }
+    .judul-utama {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 6vw, 48px); font-weight: 900; line-height: 1.08;
+      color: var(--putih); text-shadow: 0 3px 24px rgba(0,0,0,0.5); margin-bottom: 8px;
+    }
+    .judul-sub { font-size: 15px; font-weight: 500; color: rgba(253,252,248,0.72); letter-spacing: 0.5px; }
+    .tapel-badge {
+      display: inline-block; margin-top: 12px;
+      background: rgba(201,168,76,0.14); border: 1px solid rgba(201,168,76,0.40);
+      border-radius: 30px; padding: 6px 22px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      color: var(--emas-muda); text-transform: uppercase;
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown-section { width: 100%; max-width: 580px; margin-bottom: 28px; }
+    .countdown-card {
+      background: rgba(8,32,16,0.72); backdrop-filter: blur(18px);
+      border: 1px solid rgba(201,168,76,0.28); border-radius: 20px;
+      padding: 28px 22px 24px; text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .countdown-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--emas); margin-bottom: 22px;
+    }
+    .countdown-boxes { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+    .countdown-box { display: flex; flex-direction: column; align-items: center; }
+    .countdown-num {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 12px; min-width: 76px; padding: 13px 8px 11px;
+      font-family: var(--font-display); font-size: 40px; font-weight: 900;
+      color: var(--putih); line-height: 1; letter-spacing: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .countdown-num.pulse { color: var(--emas-muda); border-color: rgba(201,168,76,0.55); }
+    .countdown-satuan {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(253,252,248,0.50); margin-top: 7px;
+    }
+    .countdown-sep {
+      font-family: var(--font-display); font-size: 34px;
+      color: var(--emas); opacity: 0.45; margin-top: 12px;
+    }
+    .countdown-tanggal { margin-top: 20px; font-size: 13px; color: rgba(253,252,248,0.60); }
+    .countdown-tanggal strong { color: var(--emas-muda); }
+
+    .unlock-message {
+      display: none; margin-top: 16px;
+      background: linear-gradient(135deg, rgba(26,92,50,0.75), rgba(46,139,87,0.55));
+      border: 1px solid rgba(201,168,76,0.45); border-radius: 12px;
+      padding: 18px 20px; text-align: center;
+    }
+    .unlock-icon { font-size: 34px; margin-bottom: 6px; }
+    .unlock-text { font-size: 15px; font-weight: 700; color: var(--emas-muda); letter-spacing: 0.5px; }
+
+    /* ── FORM CEK ── */
+    .form-section { width: 100%; max-width: 580px; margin-bottom: 22px; }
+    .form-card {
+      background: rgba(8,32,16,0.72); backdrop-filter: blur(18px);
+      border: 1px solid rgba(201,168,76,0.24); border-radius: 20px;
+      padding: 26px 26px 24px;
+      box-shadow: 0 8px 36px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .form-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--putih); margin-bottom: 6px; }
+    .form-desc { font-size: 13.5px; color: rgba(253,252,248,0.62); line-height: 1.65; margin-bottom: 18px; }
+
+    .data-status {
+      background: rgba(46,139,87,0.18); border: 1px solid rgba(46,139,87,0.38);
+      border-radius: 8px; padding: 9px 14px; font-size: 12.5px;
+      color: #88DBA6; margin-bottom: 14px; display: none; font-weight: 600;
+    }
+
+    .input-row { display: flex; gap: 10px; }
+    .nisn-input {
+      flex: 1; height: 48px;
+      background: rgba(255,255,255,0.07); border: 1.5px solid rgba(201,168,76,0.24);
+      border-radius: 10px; padding: 0 16px; font-size: 15px;
+      font-family: var(--font-body); font-weight: 600;
+      color: var(--putih); outline: none; letter-spacing: 1px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .nisn-input::placeholder { color: rgba(253,252,248,0.32); font-weight: 400; letter-spacing: 0; }
+    .nisn-input:focus { border-color: rgba(201,168,76,0.65); background: rgba(255,255,255,0.10); }
+    .btn-cek {
+      height: 48px; padding: 0 24px;
+      background: linear-gradient(135deg, var(--emas), #A8813A);
+      color: var(--hijau-tua); border: none; border-radius: 10px;
+      font-size: 14px; font-family: var(--font-body); font-weight: 700;
+      cursor: pointer; white-space: nowrap; letter-spacing: 0.3px;
+      box-shadow: 0 4px 18px rgba(201,168,76,0.28);
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-cek:hover { opacity: 0.90; }
+    .btn-cek:active { transform: scale(0.97); }
+    .btn-cek:disabled { background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.38); box-shadow: none; cursor: not-allowed; }
+
+    .loading-bar {
+      display: none; align-items: center; gap: 10px;
+      background: rgba(201,168,76,0.07); border-radius: 8px;
+      padding: 10px 14px; margin-top: 14px;
+      font-size: 13px; color: var(--emas-muda);
+    }
+    .spinner {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(201,168,76,0.28); border-top-color: var(--emas);
+      animation: spin 0.8s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HASIL ── */
+    .result { margin-top: 20px; display: none; }
+    .result-lulus {
+      background: rgba(46,139,87,0.17); border: 1.5px solid rgba(46,139,87,0.48);
+      border-radius: 14px; padding: 26px 20px; text-align: center;
+    }
+    .result-tidak {
+      background: rgba(180,50,50,0.15); border: 1.5px solid rgba(200,80,80,0.42);
+      border-radius: 14px; padding: 26px 20px; text-align: center;
+    }
+    .result-icon { font-size: 44px; margin-bottom: 10px; }
+    .result-nama { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--putih); margin-bottom: 4px; }
+    .result-kelas { font-size: 13px; color: rgba(253,252,248,0.58); margin-bottom: 3px; }
+    .result-nisn { font-size: 12px; color: rgba(253,252,248,0.48); margin-bottom: 16px; letter-spacing: 0.5px; }
+    .status-badge { display: inline-block; padding: 9px 30px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+    .badge-lulus { background: var(--emas); color: var(--hijau-tua); }
+    .badge-tidak { background: #C62828; color: white; }
+    .result-pesan { margin-top: 14px; font-size: 13.5px; line-height: 1.65; }
+    .result-lulus .result-pesan { color: rgba(150,220,170,0.90); }
+    .result-tidak .result-pesan { color: rgba(255,155,155,0.85); }
+    .result-notfound {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 14px; padding: 22px; text-align: center;
+      font-size: 14px; color: rgba(253,252,248,0.62);
+    }
+
+    .locked-overlay {
+      background: rgba(201,168,76,0.05); border: 1px dashed rgba(201,168,76,0.24);
+      border-radius: 12px; padding: 22px; text-align: center;
+      font-size: 13.5px; color: rgba(253,252,248,0.50);
+    }
+    .locked-icon { font-size: 28px; margin-bottom: 8px; }
+
+    /* ── INFO ── */
+    .info-section { width: 100%; max-width: 580px; margin-bottom: 18px; }
+    .info-card {
+      background: rgba(8,32,16,0.64); backdrop-filter: blur(12px);
+      border: 1px solid rgba(201,168,76,0.17); border-radius: 16px; padding: 20px 22px;
+    }
+    .info-title { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--emas); margin-bottom: 14px; }
+    .info-item { display: flex; gap: 10px; font-size: 13.5px; color: rgba(253,252,248,0.70); margin-bottom: 9px; line-height: 1.60; }
+    .dot { color: var(--emas); flex-shrink: 0; margin-top: 2px; }
+
+    /* ── KONTAK ── */
+    .kontak-section { width: 100%; max-width: 580px; margin-bottom: 20px; }
+    .kontak-card {
+      background: rgba(8,32,16,0.64); backdrop-filter: blur(12px);
+      border: 1px solid rgba(201,168,76,0.17); border-radius: 16px; padding: 20px 22px;
+    }
+    .kontak-title { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--emas); margin-bottom: 14px; }
+    .kontak-row { display: grid; grid-template-columns: 90px 1fr; font-size: 13.5px; margin-bottom: 8px; color: rgba(253,252,248,0.72); gap: 6px; }
+    .kontak-row span:first-child { color: var(--emas-muda); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      width: 100%; text-align: center; padding: 18px 16px;
+      border-top: 1px solid rgba(201,168,76,0.14);
+      font-size: 12px; color: rgba(253,252,248,0.38); letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 480px) {
+      .logo-img { width: 46px; height: 46px; }
+      .header-nama { font-size: 16px; }
+      .countdown-num { min-width: 60px; font-size: 32px; }
+      .input-row { flex-direction: column; }
+      .btn-cek { width: 100%; }
+      .form-card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND FOTO SEKOLAH -->
+<div class="bg-layer"></div>
+
+<div class="wrapper">
+
+  <!-- ════ HEADER ════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- Logo Kementerian Agama -->
+      <img class="logo-img" src="logo-kemenag.png" alt="Logo Kementerian Agama RI">
+      <div class="header-divider"></div>
+      <div class="header-text">
+        <div class="header-instansi">Kementerian Agama Republik Indonesia</div>
+        <div class="header-nama">MTsN 3 Tanah Datar</div>
+        <div class="header-alamat">Kabupaten Tanah Datar, Sumatera Barat</div>
+      </div>
+      <div class="header-divider"></div>
+      <!-- Logo MTsN 3 Tanah Datar -->
+      <img class="logo-img" src="logo-mtsn.png" alt="Logo MTsN 3 Tanah Datar">
+    </div>
+  </header>
+
+  <!-- ════ MAIN ════ -->
+  <main class="main-content">
+
+    <!-- Ornamen garis emas -->
+    <div class="ornamen">
+      <div class="ornamen-line"></div>
+      <div class="ornamen-diamond"></div>
+      <span class="ornamen-text">Pengumuman Resmi</span>
+      <div class="ornamen-diamond"></div>
+      <div class="ornamen-line r"></div>
+    </div>
+
+    <!-- Judul -->
+    <div class="judul-section">
+      <div class="judul-label">Madrasah Tsanawiyah Negeri</div>
+      <div class="judul-utama">Pengumuman Kelulusan</div>
+      <div class="judul-sub">Peserta Didik Kelas IX</div>
+      <div class="tapel-badge">Tahun Pelajaran 2025 / 2026</div>
+    </div>
+
+    <!-- ════ COUNTDOWN ════ -->
+    <div class="countdown-section">
+      <div class="countdown-card">
+        <div class="countdown-label">⏳ Pengumuman Dibuka Dalam</div>
+        <div class="countdown-boxes" id="countdownBoxes">
+          <div class="countdown-box">
+            <div class="countdown-num" id="cdHari">00</div>
+            <div class="countdown-satuan">Hari</div>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-box">
+            <div class="countdown-num" id="cdJam">00</div>
+            <div class="countdown-satuan">Jam</div>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-box">
+            <div class="countdown-num" id="cdMenit">00</div>
+            <div class="countdown-satuan">Menit</div>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-box">
+            <div class="countdown-num" id="cdDetik">00</div>
+            <div class="countdown-satuan">Detik</div>
+          </div>
+        </div>
+        <div class="countdown-tanggal" id="cdTanggal">
+          Pengumuman dibuka pada <strong>Selasa, 2 Juni 2026 pukul 16.00 WIB</strong>
+        </div>
+        <div class="unlock-message" id="unlockMsg">
+          <div class="unlock-icon">🎓</div>
+          <div class="unlock-text">Pengumuman Kelulusan Kini Telah Dibuka!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ FORM CEK KELULUSAN ════ -->
+    <div class="form-section">
+      <div class="form-card">
+        <div class="form-title">🔍 Cek Status Kelulusan</div>
+        <div class="form-desc">
+          Masukkan <strong style="color:var(--emas-muda)">NISN</strong> (Nomor Induk Siswa Nasional) Anda untuk mengetahui status kelulusan.
+        </div>
+
+        <div class="data-status" id="dataStatus">
+          ✅ Data siswa berhasil dimuat — <span id="jumlahSiswa">0</span> siswa terdaftar.
+        </div>
+
+        <!-- Tampilan terkunci sebelum waktunya -->
+        <div id="lockedView">
+          <div class="locked-overlay">
+            <div class="locked-icon">🔒</div>
+            Pengecekan kelulusan akan tersedia pada<br>
+            <strong style="color:var(--emas-muda)">Selasa, 2 Juni 2026 pukul 16.00 WIB</strong>
+          </div>
+        </div>
+
+        <!-- Form aktif setelah waktunya -->
+        <div id="unlockedView" style="display:none">
+          <div class="input-row">
+            <input type="text" class="nisn-input" id="inputNISN"
+              placeholder="Masukkan NISN (10 digit)"
+              maxlength="10" inputmode="numeric"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            <button class="btn-cek" onclick="cekKelulusan()">Cek Kelulusan</button>
+          </div>
+          <div class="loading-bar" id="loadingBar">
+            <div class="spinner"></div>
+            <span>Memuat data siswa dari server...</span>
+          </div>
+          <div class="result" id="resultBox"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ INFO PENTING ════ -->
+    <div class="info-section">
+      <div class="info-card">
+        <div class="info-title">📌 Informasi Penting</div>
+        <div class="info-item"><span class="dot">◆</span><span>Pengumuman ini bersifat resmi dan dapat dijadikan acuan awal kelulusan peserta didik.</span></div>
+        <div class="info-item"><span class="dot">◆</span><span>Ijazah dan dokumen kelulusan resmi akan dibagikan sesuai jadwal yang ditentukan madrasah.</span></div>
+        <div class="info-item"><span class="dot">◆</span><span>Jika terdapat ketidaksesuaian data, segera hubungi pihak madrasah.</span></div>
+        <div class="info-item"><span class="dot">◆</span><span>Selamat kepada seluruh peserta didik kelas IX yang telah menyelesaikan studi di MTsN 3 Tanah Datar.</span></div>
+      </div>
+    </div>
+
+    <!-- ════ KONTAK ════ -->
+    <div class="kontak-section">
+      <div class="kontak-card">
+        <div class="kontak-title">📞 Hubungi Madrasah</div>
+        <div class="kontak-row"><span>Alamat</span><span>[Isi alamat lengkap madrasah]</span></div>
+        <div class="kontak-row"><span>Telepon</span><span>[Isi nomor telepon]</span></div>
+        <div class="kontak-row"><span>Website</span><span>mtsn03tanahdatar.sch.id</span></div>
+        <div class="kontak-row"><span>Email</span><span>[Isi email madrasah]</span></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MTsN 3 Tanah Datar &nbsp;·&nbsp; mtsn03tanahdatar.sch.id &nbsp;·&nbsp; Pengumuman Resmi Kelulusan TP 2025/2026
+  </footer>
+</div>
+
+<script>
+  /* ══════════════════════════════════════
+     KONFIGURASI — sesuaikan di sini
+  ══════════════════════════════════════ */
+  const NAMA_FILE_EXCEL = 'data-siswa-kelulusan-mtsn3.xlsx';
+  const TANGGAL_BUKA    = new Date('2026-06-02T16:00:00+07:00'); // 2 Juni 2026 16.00 WIB
+
+  /* ══════════════════════════════════════
+     COUNTDOWN TIMER
+  ══════════════════════════════════════ */
+  let sudahUnlock = false;
+
+  function updateCountdown() {
+    const sisa = TANGGAL_BUKA - new Date();
+    if (sisa <= 0) {
+      ['cdHari','cdJam','cdMenit','cdDetik'].forEach(id =>
+        document.getElementById(id).textContent = '00');
+      if (!sudahUnlock) { sudahUnlock = true; bukaHalaman(); }
+      return;
+    }
+    const pad = n => String(n).padStart(2,'0');
+    const h = Math.floor(sisa / 86400000);
+    const j = Math.floor((sisa % 86400000) / 3600000);
+    const m = Math.floor((sisa % 3600000)  / 60000);
+    const d = Math.floor((sisa % 60000)    / 1000);
+
+    [['cdHari',pad(h)],['cdJam',pad(j)],['cdMenit',pad(m)],['cdDetik',pad(d)]]
+      .forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el.textContent !== val) {
+          el.textContent = val;
+          el.classList.add('pulse');
+          setTimeout(() => el.classList.remove('pulse'), 280);
+        }
+      });
+  }
+
+  function bukaHalaman() {
+    document.getElementById('countdownBoxes').style.display = 'none';
+    document.getElementById('cdTanggal').style.display      = 'none';
+    document.getElementById('unlockMsg').style.display      = 'block';
+    document.getElementById('lockedView').style.display     = 'none';
+    document.getElementById('unlockedView').style.display   = 'block';
+    muatDataExcel();
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── MODE PREVIEW UNTUK ADMIN ──
+  // Akses dengan menambahkan ?preview=admin di URL
+  // Contoh: https://nama-anda.vercel.app/?preview=admin
+  const urlParams = new URLSearchParams(window.location.search);
+  if (new Date() >= TANGGAL_BUKA || urlParams.get('preview') === 'admin') {
+    bukaHalaman();
+  }
+
+  // Tampilkan label "MODE PREVIEW" jika sedang preview
+  if (urlParams.get('preview') === 'admin' && new Date() < TANGGAL_BUKA) {
+    const badge = document.createElement('div');
+    badge.innerHTML = `
+      <div style="
+        position:fixed; top:12px; right:12px; z-index:9999;
+        background:#C9A84C; color:#0D3B1E;
+        font-family:'Source Sans 3',sans-serif;
+        font-size:11px; font-weight:700; letter-spacing:1px;
+        padding:6px 14px; border-radius:20px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.3);
+      ">🔧 MODE PREVIEW ADMIN</div>`;
+    document.body.appendChild(badge);
+  }
+
+  /* ══════════════════════════════════════
+     BACA FILE EXCEL
+  ══════════════════════════════════════ */
+  let dataSiswa = [];
+
+  async function muatDataExcel() {
+    document.getElementById('loadingBar').style.display = 'flex';
+    try {
+      const res = await fetch(NAMA_FILE_EXCEL);
+      if (!res.ok) throw new Error('File tidak ditemukan: ' + NAMA_FILE_EXCEL);
+      const buf  = await res.arrayBuffer();
+      const wb   = XLSX.read(buf, { type: 'array' });
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header:1, range:4 });
+
+      dataSiswa = rows.filter(r => r[1]).map(r => ({
+        nisn       : String(r[1]).trim(),
+        nama       : String(r[2] || '').trim(),
+        kelas      : String(r[3] || '').trim(),
+        status     : String(r[4] || '').trim().toUpperCase(),
+        keterangan : String(r[5] || '').trim(),
+      }));
+
+      document.getElementById('loadingBar').style.display = 'none';
+      document.getElementById('dataStatus').style.display = 'block';
+      document.getElementById('jumlahSiswa').textContent  = dataSiswa.length;
+    } catch(err) {
+      document.getElementById('loadingBar').style.display = 'none';
+      const box = document.getElementById('resultBox');
+      box.style.display = 'block';
+      box.innerHTML = `<div class="result-notfound">
+        ⚠️ <strong>Gagal memuat data.</strong><br>
+        Pastikan file <code>${NAMA_FILE_EXCEL}</code> berada satu folder dengan halaman ini.<br>
+        <small style="opacity:0.55;margin-top:4px;display:block">${err.message}</small>
+      </div>`;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     CEK KELULUSAN
+  ══════════════════════════════════════ */
+  function cekKelulusan() {
+    const nisn = document.getElementById('inputNISN').value.trim();
+    const box  = document.getElementById('resultBox');
+
+    if (!nisn || nisn.length < 10) {
+      box.style.display = 'block';
+      box.innerHTML = `<div class="result-notfound">⚠️ <strong>NISN tidak valid.</strong><br>Masukkan 10 digit NISN dengan benar.</div>`;
+      return;
+    }
+
+    const s = dataSiswa.find(x => x.nisn === nisn);
+    box.style.display = 'block';
+
+    if (!s) {
+      box.innerHTML = `<div class="result-notfound">❓ <strong>NISN tidak ditemukan.</strong><br>Periksa kembali NISN Anda atau hubungi pihak madrasah.</div>`;
+      return;
+    }
+
+    const ket = s.keterangan
+      ? `<div style="margin-top:10px;font-size:12px;opacity:0.65">Keterangan: ${s.keterangan}</div>` : '';
+
+    if (s.status === 'LULUS') {
+      box.innerHTML = `
+        <div class="result-lulus">
+          <div class="result-icon">🎓</div>
+          <div class="result-nama">${s.nama}</div>
+          <div class="result-kelas">Kelas ${s.kelas}</div>
+          <div class="result-nisn">NISN: ${s.nisn}</div>
+          <span class="status-badge badge-lulus">✅ &nbsp;LULUS</span>
+          <div class="result-pesan">
+            Selamat! Anda dinyatakan <strong>LULUS</strong> dari MTsN 3 Tanah Datar.<br>
+            Semoga sukses di jenjang pendidikan berikutnya. 🎉
+          </div>${ket}
+        </div>`;
+    } else {
+      box.innerHTML = `
+        <div class="result-tidak">
+          <div class="result-icon">📋</div>
+          <div class="result-nama">${s.nama}</div>
+          <div class="result-kelas">Kelas ${s.kelas}</div>
+          <div class="result-nisn">NISN: ${s.nisn}</div>
+          <span class="status-badge badge-tidak">❌ &nbsp;TIDAK LULUS</span>
+          <div class="result-pesan">
+            Silakan hubungi pihak madrasah untuk informasi dan langkah selanjutnya.
+          </div>${ket}
+        </div>`;
+    }
+  }
+
+  document.addEventListener('keypress', e => {
+    if (e.key === 'Enter' && document.activeElement === document.getElementById('inputNISN'))
+      cekKelulusan();
+  });
+</script>
+</body>
+</html>
